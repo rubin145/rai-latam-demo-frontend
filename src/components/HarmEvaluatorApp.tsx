@@ -1,0 +1,156 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Shield, Search, TestTube, Info, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import * as Tabs from '@radix-ui/react-tabs'
+import InteractiveEvaluation from './InteractiveEvaluation'
+import TestMode from './TestMode'
+import About from './About'
+
+interface ServiceStatus {
+  status: string
+  message: string
+  timestamp: string
+}
+
+export default function HarmEvaluatorApp() {
+  const [serviceStatus, setServiceStatus] = useState<ServiceStatus | null>(null)
+
+  useEffect(() => {
+    // Check service status on component mount
+    checkServiceStatus()
+  }, [])
+
+  const checkServiceStatus = async () => {
+    try {
+      const response = await fetch('http://localhost:8000/api/evaluation/status')
+      if (response.ok) {
+        const status = await response.json()
+        setServiceStatus(status)
+      }
+    } catch (error) {
+      console.error('Failed to check service status:', error)
+      setServiceStatus({
+        status: 'error',
+        message: 'Failed to connect to backend service',
+        timestamp: new Date().toISOString()
+      })
+    }
+  }
+
+  const getStatusIcon = () => {
+    if (!serviceStatus) return <AlertTriangle className="h-4 w-4 text-yellow-500" />
+    
+    switch (serviceStatus.status) {
+      case 'healthy':
+        return <CheckCircle className="h-4 w-4 text-green-500" />
+      case 'unhealthy':
+      case 'error':
+        return <XCircle className="h-4 w-4 text-red-500" />
+      default:
+        return <AlertTriangle className="h-4 w-4 text-yellow-500" />
+    }
+  }
+
+  const getStatusColor = () => {
+    if (!serviceStatus) return 'text-yellow-600'
+    
+    switch (serviceStatus.status) {
+      case 'healthy':
+        return 'text-green-600'
+      case 'unhealthy':
+      case 'error':
+        return 'text-red-600'
+      default:
+        return 'text-yellow-600'
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+      {/* Header */}
+      <div className="bg-white shadow-sm border-b">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg">
+                <Shield className="h-8 w-8 text-white" />
+              </div>
+              <div>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
+                  Harm Assessment Evaluator
+                </h1>
+                <p className="text-gray-600 mt-1">
+                  Advanced AI system for evaluating potentially harmful content in user queries
+                </p>
+              </div>
+            </div>
+            
+            {/* Status Indicator */}
+            <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg">
+              {getStatusIcon()}
+              <span className={`text-sm font-medium ${getStatusColor()}`}>
+                {serviceStatus?.status || 'checking...'}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <Tabs.Root defaultValue="interactive" className="w-full">
+          <Tabs.List className="flex p-1 bg-white rounded-lg shadow-sm border mb-8">
+            <Tabs.Trigger
+              value="interactive"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
+            >
+              <Search className="h-4 w-4" />
+              Interactive Evaluation
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              value="test"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-green-50 data-[state=active]:text-green-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
+            >
+              <TestTube className="h-4 w-4" />
+              Test Mode
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              value="about"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
+            >
+              <Info className="h-4 w-4" />
+              About
+            </Tabs.Trigger>
+          </Tabs.List>
+
+          <Tabs.Content value="interactive">
+            <InteractiveEvaluation />
+          </Tabs.Content>
+
+          <Tabs.Content value="test">
+            <TestMode />
+          </Tabs.Content>
+
+          <Tabs.Content value="about">
+            <About />
+          </Tabs.Content>
+        </Tabs.Root>
+      </div>
+
+      {/* Footer */}
+      <div className="bg-gray-50 border-t mt-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+          <div className="text-center">
+            <p className="text-sm text-gray-600">
+              <strong>🛡️ Harm Assessment Evaluator</strong> | Powered by AI Refinery SDK
+            </p>
+            <p className="text-xs text-gray-500 mt-1">
+              Advanced AI safety evaluation system for content moderation
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+} 
