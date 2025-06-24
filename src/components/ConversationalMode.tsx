@@ -9,7 +9,16 @@ interface Message {
   text: string
 }
 
-export default function ConversationalMode() {
+interface ConversationalModeProps {
+  onInteraction?: (
+    decision: string | null,
+    evaluation: string | null,
+    prompt: string,
+    response: string
+  ) => void
+}
+
+export default function ConversationalMode({ onInteraction }: ConversationalModeProps) {
   const [messages, setMessages] = useState<Message[]>([
     { sender: 'bot', text: "Meu nome é FinBot, estou aqui para te ajudar com assuntos bancários." }
   ])
@@ -24,7 +33,8 @@ export default function ConversationalMode() {
     e.preventDefault()
     if (!input.trim() || isLoading) return
 
-    const userMessage: Message = { sender: 'user', text: input }
+    const prompt = input
+    const userMessage: Message = { sender: 'user', text: prompt }
     setMessages(prev => [...prev, userMessage])
     setInput('')
     setIsLoading(true)
@@ -59,6 +69,14 @@ export default function ConversationalMode() {
       } else {
         setFilterDecision(null)
         setFilterEvaluation(null)
+      }
+      if (onInteraction) {
+        onInteraction(
+          data.filter_decision ?? null,
+          data.filter_evaluation ?? null,
+          prompt,
+          data.response
+        )
       }
       const botMessage: Message = { sender: 'bot', text: data.response }
       setMessages(prev => [...prev, botMessage])

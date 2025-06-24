@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Search, TestTube, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle } from 'lucide-react'
+import { Shield, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle, SlidersHorizontal } from 'lucide-react'
 import * as Tabs from '@radix-ui/react-tabs'
-import InteractiveEvaluation from './InteractiveEvaluation'
-import TestMode from './TestMode'
+// import InteractiveEvaluation from './InteractiveEvaluation'
+// import TestMode from './TestMode'
 import About from './About'
 import ConversationalMode from './ConversationalMode'
+import ControlPane from './ControlPane'
 
 interface ServiceStatus {
   status: string
@@ -16,6 +17,12 @@ interface ServiceStatus {
 
 export default function HarmEvaluatorApp() {
   const [serviceStatus, setServiceStatus] = useState<ServiceStatus | null>(null)
+  // Contadores por tipo de filtro de input (danger flags) y total de prompts
+  const [totalPrompts, setTotalPrompts] = useState(0)
+  const [toxicityCount, setToxicityCount] = useState(0)
+  const [financeCount, setFinanceCount] = useState(0)
+  const [hallucinationCount, setHallucinationCount] = useState(0)
+  const [lastInteraction, setLastInteraction] = useState<{ prompt: string; response: string } | null>(null)
 
   useEffect(() => {
     // Check service status on component mount
@@ -102,28 +109,21 @@ export default function HarmEvaluatorApp() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <Tabs.Root defaultValue="interactive" className="w-full">
+        <Tabs.Root defaultValue="conversational" className="w-full">
           <Tabs.List className="flex p-1 bg-white rounded-lg shadow-sm border mb-8">
-            <Tabs.Trigger
-              value="interactive"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
-            >
-              <Search className="h-4 w-4" />
-              Interactive Evaluation
-            </Tabs.Trigger>
-            <Tabs.Trigger
-              value="test"
-              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-green-50 data-[state=active]:text-green-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
-            >
-              <TestTube className="h-4 w-4" />
-              Test Mode
-            </Tabs.Trigger>
             <Tabs.Trigger
               value="conversational"
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-indigo-50 data-[state=active]:text-indigo-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
             >
               <MessageCircle className="h-4 w-4" />
-              Conversational
+              Chat Agent
+            </Tabs.Trigger>
+            <Tabs.Trigger
+              value="control"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-yellow-50 data-[state=active]:text-yellow-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
+            >
+              <SlidersHorizontal className="h-4 w-4" />
+              Control Pane
             </Tabs.Trigger>
             <Tabs.Trigger
               value="about"
@@ -134,21 +134,39 @@ export default function HarmEvaluatorApp() {
             </Tabs.Trigger>
           </Tabs.List>
 
-          <Tabs.Content value="interactive">
-            <InteractiveEvaluation />
-          </Tabs.Content>
+        <Tabs.Content value="conversational" forceMount className="mt-4 data-[state=inactive]:hidden">
+          <ConversationalMode
+              onInteraction={(decision, evaluation, prompt, response) => {
+                setTotalPrompts(tp => tp + 1)
+                // Contar danger flags por tipo según evaluación del input filter
+                const ev = evaluation?.toLowerCase() || ''
+                if (ev.includes('toxic')) {
+                  setToxicityCount(c => c + (decision === 'danger' ? 1 : 0))
+                }
+                if (ev.includes('finance')) {
+                  setFinanceCount(c => c + (decision === 'danger' ? 1 : 0))
+                }
+                if (ev.includes('halluc')) {
+                  setHallucinationCount(c => c + (decision === 'danger' ? 1 : 0))
+                }
+                setLastInteraction({ prompt, response })
+              }}
+            />
+        </Tabs.Content>
 
-          <Tabs.Content value="test">
-            <TestMode />
-          </Tabs.Content>
+        <Tabs.Content value="control" forceMount className="mt-4 data-[state=inactive]:hidden">
+          <ControlPane
+            lastInteraction={lastInteraction || undefined}
+            totalPrompts={totalPrompts}
+            toxicityCount={toxicityCount}
+            financeCount={financeCount}
+            hallucinationCount={hallucinationCount}
+          />
+        </Tabs.Content>
 
-          <Tabs.Content value="conversational">
-            <ConversationalMode />
-          </Tabs.Content>
-
-          <Tabs.Content value="about">
-            <About />
-          </Tabs.Content>
+        <Tabs.Content value="about" className="mt-4 data-[state=inactive]:hidden">
+          <About />
+        </Tabs.Content>
         </Tabs.Root>
       </div>
 

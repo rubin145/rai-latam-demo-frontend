@@ -1,0 +1,162 @@
+ 'use client'
+
+ import { useState } from 'react'
+ import { AlertTriangle, DollarSign, Brain } from 'lucide-react'
+
+ interface ControlPaneProps {
+   lastInteraction?: { prompt: string; response: string }
+   totalPrompts: number
+   toxicityCount: number
+   financeCount: number
+ }
+
+ interface EvalResult {
+   toxicidade: number
+   toxicidadeEvaluation: string
+   conselho_financeiro: boolean
+   conselhoFinanceiroEvaluation: string
+   alucinacao: boolean
+   alucinacaoEvaluation: string
+ }
+
+ export default function ControlPane({
+   lastInteraction,
+   totalPrompts,
+   toxicityCount,
+   financeCount,
+ }: ControlPaneProps) {
+   const [evalResult, setEvalResult] = useState<EvalResult | null>(null)
+   const [loading, setLoading] = useState(false)
+
+   const handleEvaluate = async () => {
+     if (!lastInteraction) return
+     setLoading(true)
+     try {
+       const res = await fetch('http://localhost:8000/api/evaluate_response', {
+         method: 'POST',
+         headers: { 'Content-Type': 'application/json' },
+         body: JSON.stringify({
+           prompt: lastInteraction.prompt,
+           response: lastInteraction.response,
+         }),
+       })
+       const data = await res.json()
+       const { toxicity, financial_advice, hallucination } = data.results
+       setEvalResult({
+         toxicidade: toxicity.decision,
+         toxicidadeEvaluation: toxicity.evaluation,
+         conselho_financeiro: financial_advice.decision === 'danger',
+         conselhoFinanceiroEvaluation: financial_advice.evaluation,
+         alucinacao: hallucination.decision === 'danger',
+         alucinacaoEvaluation: hallucination.evaluation,
+       })
+     } catch (err) {
+       console.error('Failed to evaluate response:', err)
+     } finally {
+       setLoading(false)
+     }
+   }
+
+   return (
+     <div className="space-y-6">
+       <div className="text-center space-y-4">
+         <h3 className="text-lg font-semibold text-gray-800">
+           Métricas de classificação de prompts
+         </h3>
+         <div className="flex justify-center space-x-12">
+           <div className="flex flex-col items-center">
+             <AlertTriangle className="h-8 w-8 text-yellow-500" />
+             <span className="mt-2 text-3xl font-bold">
+               {totalPrompts > 0
+                 ? `${toxicityCount}/${totalPrompts}`
+                 : toxicityCount}
+             </span>
+             <span className="text-sm text-gray-600">Toxicidade</span>
+           </div>
+           <div className="flex flex-col items-center">
+             <DollarSign className="h-8 w-8 text-green-500" />
+             <span className="mt-2 text-3xl font-bold">
+               {totalPrompts > 0
+                 ? `${financeCount}/${totalPrompts}`
+                 : financeCount}
+             </span>
+             <span className="text-sm text-gray-600">Conselho Financeiro</span>
+           </div>
+         </div>
+       </div>
+       {lastInteraction && (
+         <div className="p-4 border rounded-md bg-white">
+           <h3 className="font-semibold mb-2 text-gray-800">Última Interação</h3>
+           <p className="text-sm text-gray-700">
+             <span className="font-medium">Prompt:</span> {lastInteraction.prompt}
+           </p>
+           <p className="text-sm text-gray-700 mt-1">
+             <span className="font-medium">Resposta:</span>{' '}
+             {lastInteraction.response}
+           </p>
+           <button
+             onClick={handleEvaluate}
+             disabled={loading}
+             className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 disabled:bg-gray-300 transition-colors"
+           >
+             {loading ? 'Avaliando...' : 'Avaliar Resposta'}
+           </button>
+           {evalResult && (
+             <table className="table-auto w-full mt-4 text-left">
+               <colgroup>
+                 <col className="w-6" />
+                 <col className="w-auto" />
+                 <col className="w-full" />
+               </colgroup>
+               <tbody>
+                 <tr className="align-baseline">
+                   <td>
+                     <AlertTriangle className="h-4 w-4 text-yellow-500" />
+                   </td>
+                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                     Toxicidade: {evalResult.toxicidade}/5
+                   </td>
+                   <td className="text-sm text-gray-500">
+                     {evalResult.toxicidadeEvaluation}
+                   </td>
+                 </tr>
+                 <tr className="align-baseline">
+                   <td>
+                     {evalResult.conselho_financeiro ? (
+                       <DollarSign className="h-4 w-4 text-red-500" />
+                     ) : (
+                       <DollarSign className="h-4 w-4 text-green-500" />
+                     )}
+                   </td>
+                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                     Conselho Financeiro:{' '}
+                     {evalResult.conselho_financeiro ? 'Sim' : 'Não'}
+                   </td>
+                   <td className="text-sm text-gray-500">
+                     {evalResult.conselhoFinanceiroEvaluation}
+                   </td>
+                 </tr>
+                 <tr className="align-baseline">
+                   <td>
+                     {evalResult.alucinacao ? (
+                       <Brain className="h-4 w-4 text-red-500" />
+                     ) : (
+                       <Brain className="h-4 w-4 text-green-500" />
+                     )}
+                   </td>
+                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                     Alucinação:{' '}
+                     {evalResult.alucinacao ? 'Sim' : 'Não'}
+                   </td>
+                   <td className="text-sm text-gray-500">
+                     {evalResult.alucinacaoEvaluation}
+                   </td>
+                 </tr>
+               </tbody>
+             </table>
+           )}
+         </div>
+       )}
+     </div>
+   )
+ }
