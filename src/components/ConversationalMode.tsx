@@ -16,6 +16,7 @@ export default function ConversationalMode() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [useGuardrails, setUseGuardrails] = useState(true)
+  const [sessionId, setSessionId] = useState<string | null>(null)
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -28,16 +29,20 @@ export default function ConversationalMode() {
 
     // Determine the endpoint based on the guardrails toggle
     const endpoint = useGuardrails
-      ? 'http://localhost:8000/api/evaluation/chat-guardrails'
-      : 'http://localhost:8000/api/evaluation/chat'
+      ? 'http://localhost:8000/api/chat-guardrails'
+      : 'http://localhost:8000/api/chat'
 
     try {
       // API call to the backend
       const response = await fetch(endpoint, {
         method: 'POST',
+        credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        // NOTE: A real implementation would need to send conversation history
-        body: JSON.stringify({ query: input }),
+        body: JSON.stringify(
+          sessionId
+            ? { query: input, session_id: sessionId }
+            : { query: input }
+        ),
       })
 
       if (!response.ok) {
@@ -45,6 +50,7 @@ export default function ConversationalMode() {
       }
 
       const data = await response.json()
+      if (data.session_id) setSessionId(data.session_id)
       const botMessage: Message = { sender: 'bot', text: data.response }
       setMessages(prev => [...prev, botMessage])
 

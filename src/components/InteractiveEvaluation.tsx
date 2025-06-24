@@ -36,6 +36,7 @@ export default function InteractiveEvaluation() {
     try {
       const response = await fetch('http://localhost:8000/api/evaluation/query', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },

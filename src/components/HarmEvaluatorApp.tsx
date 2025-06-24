@@ -24,7 +24,9 @@ export default function HarmEvaluatorApp() {
 
   const checkServiceStatus = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/status')
+      const response = await fetch('http://localhost:8000/api/evaluation/status', {
+        credentials: 'include',
+      })
       if (response.ok) {
         const status = await response.json()
         setServiceStatus(status)

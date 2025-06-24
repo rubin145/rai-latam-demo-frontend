@@ -55,7 +55,9 @@ export default function TestMode() {
   const loadQuestions = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/questions')
+      const response = await fetch('http://localhost:8000/api/evaluation/questions', {
+        credentials: 'include',
+      })
       if (response.ok) {
         const data = await response.json()
         setQuestions(data)
@@ -76,6 +78,7 @@ export default function TestMode() {
     try {
       const response = await fetch('http://localhost:8000/api/evaluation/questions', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -114,6 +117,7 @@ export default function TestMode() {
       console.log('Starting batch test...')
       const response = await fetch('http://localhost:8000/api/evaluation/batch-test', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
