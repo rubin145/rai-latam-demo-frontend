@@ -1,11 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Search, TestTube, Info, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import { Shield, Search, TestTube, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle } from 'lucide-react'
 import * as Tabs from '@radix-ui/react-tabs'
 import InteractiveEvaluation from './InteractiveEvaluation'
 import TestMode from './TestMode'
 import About from './About'
+import ConversationalMode from './ConversationalMode'
 
 interface ServiceStatus {
   status: string
@@ -116,6 +117,13 @@ export default function HarmEvaluatorApp() {
               Test Mode
             </Tabs.Trigger>
             <Tabs.Trigger
+              value="conversational"
+              className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-indigo-50 data-[state=active]:text-indigo-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
+            >
+              <MessageCircle className="h-4 w-4" />
+              Conversational
+            </Tabs.Trigger>
+            <Tabs.Trigger
               value="about"
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
             >
@@ -130,6 +138,10 @@ export default function HarmEvaluatorApp() {
 
           <Tabs.Content value="test">
             <TestMode />
+          </Tabs.Content>
+
+          <Tabs.Content value="conversational">
+            <ConversationalMode />
           </Tabs.Content>
 
           <Tabs.Content value="about">
