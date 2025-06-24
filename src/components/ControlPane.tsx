@@ -1,7 +1,7 @@
  'use client'
 
- import { useState } from 'react'
- import { AlertTriangle, DollarSign, Brain } from 'lucide-react'
+import { useState } from 'react'
+import { AlertTriangle, DollarSign, Brain, Target } from 'lucide-react'
 
  interface ControlPaneProps {
    lastInteraction?: { prompt: string; response: string }
@@ -15,8 +15,11 @@
    toxicidadeEvaluation: string
    conselho_financeiro: boolean
    conselhoFinanceiroEvaluation: string
-   alucinacao: boolean
-   alucinacaoEvaluation: string
+  alucinacao: boolean
+  alucinacaoEvaluation: string
+  /** Avaliação de aderência ao tópico (1-3) */
+  aderencia_topico: number
+  aderenciaTopicoEvaluation: string
  }
 
  export default function ControlPane({
@@ -41,15 +44,17 @@
          }),
        })
        const data = await res.json()
-       const { toxicity, financial_advice, hallucination } = data.results
-       setEvalResult({
-         toxicidade: toxicity.decision,
-         toxicidadeEvaluation: toxicity.evaluation,
-         conselho_financeiro: financial_advice.decision === 'danger',
-         conselhoFinanceiroEvaluation: financial_advice.evaluation,
-         alucinacao: hallucination.decision === 'danger',
-         alucinacaoEvaluation: hallucination.evaluation,
-       })
+      const { toxicity, financial_advice, hallucination, topic_adherence } = data.results
+      setEvalResult({
+        toxicidade: toxicity.decision,
+        toxicidadeEvaluation: toxicity.evaluation,
+        conselho_financeiro: financial_advice.decision === 'danger',
+        conselhoFinanceiroEvaluation: financial_advice.evaluation,
+        alucinacao: hallucination.decision === 'danger',
+        alucinacaoEvaluation: hallucination.evaluation,
+        aderencia_topico: topic_adherence.decision,
+        aderenciaTopicoEvaluation: topic_adherence.evaluation,
+      })
      } catch (err) {
        console.error('Failed to evaluate response:', err)
      } finally {
@@ -61,7 +66,7 @@
      <div className="space-y-6">
        <div className="text-center space-y-4">
          <h3 className="text-lg font-semibold text-gray-800">
-           Métricas de classificação de prompts
+           Prompts
          </h3>
          <div className="flex justify-center space-x-12">
            <div className="flex flex-col items-center">
@@ -136,22 +141,32 @@
                      {evalResult.conselhoFinanceiroEvaluation}
                    </td>
                  </tr>
-                 <tr className="align-baseline">
-                   <td>
-                     {evalResult.alucinacao ? (
-                       <Brain className="h-4 w-4 text-red-500" />
-                     ) : (
-                       <Brain className="h-4 w-4 text-green-500" />
-                     )}
-                   </td>
-                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
-                     Alucinação:{' '}
-                     {evalResult.alucinacao ? 'Sim' : 'Não'}
-                   </td>
-                   <td className="text-sm text-gray-500">
-                     {evalResult.alucinacaoEvaluation}
-                   </td>
-                 </tr>
+                <tr className="align-baseline">
+                  <td>
+                    {evalResult.alucinacao ? (
+                      <Brain className="h-4 w-4 text-red-500" />
+                    ) : (
+                      <Brain className="h-4 w-4 text-green-500" />
+                    )}
+                  </td>
+                  <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                    Alucinação: {evalResult.alucinacao ? 'Sim' : 'Não'}
+                  </td>
+                  <td className="text-sm text-gray-500">
+                    {evalResult.alucinacaoEvaluation}
+                  </td>
+                </tr>
+                <tr className="align-baseline">
+                  <td>
+                    <Target className="h-4 w-4 text-blue-500" />
+                  </td>
+                  <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                    Aderência ao Tópico: {evalResult.aderencia_topico}/3
+                  </td>
+                  <td className="text-sm text-gray-500">
+                    {evalResult.aderenciaTopicoEvaluation}
+                  </td>
+                </tr>
                </tbody>
              </table>
            )}

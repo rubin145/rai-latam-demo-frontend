@@ -1,6 +1,6 @@
 'use client'
 
-import { Shield, Search, TestTube, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import { Shield, AlertTriangle, CheckCircle, XCircle, Flame, DollarSign, Settings } from 'lucide-react'
 
 export default function About() {
   return (
@@ -17,215 +17,192 @@ export default function About() {
         </div>
 
         <div className="prose max-w-none">
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">Overview</h3>
+          <h3 className="text-lg font-semibold text-gray-900 mb-3">Visão Geral</h3>
           <p className="text-gray-700 mb-6">
-            This application provides comprehensive evaluation of user queries for potentially harmful content 
-            using the Accenture AI Refinery SDK. It combines advanced AI analysis with structured risk assessment 
-            to help organizations implement effective content moderation.
+            Esta demo ilustra a importância de implementar mecanismos de segurança e avaliação em agentes baseados em LLMs, a necessidade de monitorar comportamentos inesperados, e definir políticas claras de comportamento esperado.
           </p>
-
-          <h3 className="text-lg font-semibold text-gray-900 mb-3">Features</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-            <div className="flex items-start gap-3">
-              <Search className="h-6 w-6 text-blue-500 mt-1" />
-              <div>
-                <h4 className="font-medium text-gray-900">Interactive Evaluation</h4>
-                <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                  <li>• Real-time harm assessment of any query</li>
-                  <li>• Multi-dimensional risk analysis</li>
-                  <li>• Detailed reasoning for each assessment</li>
-                  <li>• Actionable recommendations</li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="font-medium text-gray-900 mb-2">Políticas definidas</h4>
+              <ul className="text-sm text-gray-700 list-disc list-inside space-y-1">
+                <li>Política de toxicidade</li>
+                <li>Política de não aconselhamento financeiro</li>
+                <li>Política de restrição de escopo</li>
+              </ul>
             </div>
-
-            <div className="flex items-start gap-3">
-              <TestTube className="h-6 w-6 text-green-500 mt-1" />
-              <div>
-                <h4 className="font-medium text-gray-900">Test Mode</h4>
-                <ul className="text-sm text-gray-600 mt-1 space-y-1">
-                  <li>• Comprehensive test question database</li>
-                  <li>• Batch testing capabilities</li>
-                  <li>• Add custom test questions</li>
-                  <li>• Track assessment accuracy</li>
-                </ul>
-              </div>
+            <div>
+              <h4 className="font-medium text-gray-900 mb-2">Guardrails</h4>
+              <ul className="text-sm text-gray-700 list-none space-y-2">
+                <li className="flex items-center gap-2">
+                  <Flame className="h-5 w-5 text-red-500" /> Filtro de entrada: toxicity_filter
+                </li>
+                <li className="flex items-center gap-2">
+                  <DollarSign className="h-5 w-5 text-green-500" /> Filtro de entrada: financial_advice_filter
+                </li>
+                <li className="flex items-center gap-2">
+                  <Settings className="h-5 w-5 text-blue-500" /> Instrução de sistema
+                </li>
+              </ul>
             </div>
           </div>
         </div>
       </div>
 
       <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Risk Dimensions</h3>
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Métricas de Avaliação</h3>
         <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b">
-                <th className="text-left py-3 font-medium text-gray-900">Dimension</th>
-                <th className="text-left py-3 font-medium text-gray-900">Weight</th>
-                <th className="text-left py-3 font-medium text-gray-900">Description</th>
+                <th className="text-left py-3 font-bold text-gray-900">Métrica</th>
+                <th className="text-left py-3 font-bold text-gray-900">Descrição</th>
               </tr>
             </thead>
             <tbody className="divide-y">
               <tr>
-                <td className="py-3 font-medium text-gray-900">Toxicity Level</td>
-                <td className="py-3 text-gray-600">30%</td>
-                <td className="py-3 text-gray-600">Toxic, offensive, or harmful language</td>
+                <td className="py-3 font-medium text-gray-900">Toxicidade</td>
+                <td className="py-3 text-gray-600">Nível de linguagem tóxica ou ofensiva</td>
               </tr>
               <tr>
-                <td className="py-3 font-medium text-gray-900">Violence & Harm Risk</td>
-                <td className="py-3 text-gray-600">25%</td>
-                <td className="py-3 text-gray-600">Potential for promoting violence or harm</td>
+                <td className="py-3 font-medium text-gray-900">Aconselhamento financeiro</td>
+                <td className="py-3 text-gray-600">Risco de fornecer orientação financeira inadequada</td>
               </tr>
               <tr>
-                <td className="py-3 font-medium text-gray-900">Illegal Activity Risk</td>
-                <td className="py-3 text-gray-600">20%</td>
-                <td className="py-3 text-gray-600">Requests for illegal assistance</td>
+                <td className="py-3 font-medium text-gray-900">Alucinação</td>
+                <td className="py-3 text-gray-600">Presença de informações falsas ou inventadas</td>
               </tr>
               <tr>
-                <td className="py-3 font-medium text-gray-900">Misinformation Risk</td>
-                <td className="py-3 text-gray-600">15%</td>
-                <td className="py-3 text-gray-600">Spreading false or dangerous information</td>
-              </tr>
-              <tr>
-                <td className="py-3 font-medium text-gray-900">Privacy Violation Risk</td>
-                <td className="py-3 text-gray-600">10%</td>
-                <td className="py-3 text-gray-600">Personal information requests</td>
+                <td className="py-3 font-medium text-gray-900">Aderência ao tópico</td>
+                <td className="py-3 text-gray-600">Avalia o alinhamento da resposta com o tópico solicitado (1-3)</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow-sm border p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Risk Levels</h3>
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <h3 className="text-lg font-semibold text-gray-900 mb-4">Dimensões de Risco</h3>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="border-b">
+                <th className="text-left py-3 font-bold text-gray-900">Dimensão</th>
+                <th className="text-left py-3 font-bold text-gray-900">Descrição</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y">
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Nível de Toxicidade</td>
+                <td className="py-3 text-gray-600">Linguagem tóxica, ofensiva ou prejudicial</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Risco de Violência e Dano</td>
+                <td className="py-3 text-gray-600">Potencial para promover violência ou dano</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Risco de Atividade Ilegal</td>
+                <td className="py-3 text-gray-600">Solicitações de assistência ilegal</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Risco de Desinformação</td>
+                <td className="py-3 text-gray-600">Propagação de informações falsas ou perigosas</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Risco de Violação de Privacidade</td>
+                <td className="py-3 text-gray-600">Solicitações de informações pessoais</td>
+              </tr>
+              <tr>
+                <td className="py-3 font-medium text-gray-900">Risco de Conformidade</td>
+                <td className="py-3 text-gray-600">Dar aconselhamento financeiro de maneira inadequada</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div className="bg-white rounded-lg shadow-sm border p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Níveis de Risco</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <CheckCircle className="h-5 w-5 text-green-500" />
               <div>
-                <div className="font-medium text-gray-900">Safe</div>
-                <div className="text-sm text-gray-600">No harmful content detected</div>
+                <div className="font-medium text-gray-900">Seguro</div>
+                <div className="text-sm text-gray-600">Nenhum conteúdo prejudicial detectado</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-yellow-500" />
               <div>
-                <div className="font-medium text-gray-900">Caution</div>
-                <div className="text-sm text-gray-600">Minor concerns or edge cases</div>
+                <div className="font-medium text-gray-900">Atenção</div>
+                <div className="text-sm text-gray-600">Preocupações menores ou casos limites</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-orange-500" />
               <div>
-                <div className="font-medium text-gray-900">Moderate Risk</div>
-                <div className="text-sm text-gray-600">Clear harmful intent but limited scope</div>
+                <div className="font-medium text-gray-900">Risco Moderado</div>
+                <div className="text-sm text-gray-600">Intenção prejudicial clara mas escopo limitado</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-red-500" />
               <div>
-                <div className="font-medium text-gray-900">High Risk</div>
-                <div className="text-sm text-gray-600">Significant potential for harm</div>
+                <div className="font-medium text-gray-900">Alto Risco</div>
+                <div className="text-sm text-gray-600">Potencial significativo de dano</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <XCircle className="h-5 w-5 text-red-600" />
               <div>
-                <div className="font-medium text-gray-900">Dangerous</div>
-                <div className="text-sm text-gray-600">Immediate and severe threat</div>
+                <div className="font-medium text-gray-900">Perigoso</div>
+                <div className="text-sm text-gray-600">Ameaça imediata e severa</div>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="bg-white rounded-lg shadow-sm border p-6">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recommendations</h3>
+        <div>
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Recomendações</h3>
           <div className="space-y-3">
             <div className="flex items-center gap-3">
               <CheckCircle className="h-5 w-5 text-green-500" />
               <div>
-                <div className="font-medium text-gray-900">Allow</div>
-                <div className="text-sm text-gray-600">Safe to proceed without restrictions</div>
+                <div className="font-medium text-gray-900">Permitir</div>
+                <div className="text-sm text-gray-600">Seguro para prosseguir sem restrições</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-yellow-500" />
               <div>
-                <div className="font-medium text-gray-900">Allow with Warning</div>
-                <div className="text-sm text-gray-600">Proceed with user notification</div>
+                <div className="font-medium text-gray-900">Permitir com Aviso</div>
+                <div className="text-sm text-gray-600">Prosseguir com notificação ao usuário</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <AlertTriangle className="h-5 w-5 text-orange-500" />
               <div>
-                <div className="font-medium text-gray-900">Require Review</div>
-                <div className="text-sm text-gray-600">Human review recommended</div>
+                <div className="font-medium text-gray-900">Requer Revisão</div>
+                <div className="text-sm text-gray-600">Revisão humana recomendada</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <XCircle className="h-5 w-5 text-red-500" />
               <div>
-                <div className="font-medium text-gray-900">Block</div>
-                <div className="text-sm text-gray-600">Should be blocked automatically</div>
+                <div className="font-medium text-gray-900">Bloquear</div>
+                <div className="text-sm text-gray-600">Deve ser bloqueado automaticamente</div>
               </div>
             </div>
             <div className="flex items-center gap-3">
               <XCircle className="h-5 w-5 text-red-600" />
               <div>
-                <div className="font-medium text-gray-900">Immediate Block</div>
-                <div className="text-sm text-gray-600">Requires immediate intervention</div>
+                <div className="font-medium text-gray-900">Bloqueio Imediato</div>
+                <div className="text-sm text-gray-600">Requer intervenção imediata</div>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-6">
-        <div className="flex items-start gap-3">
-          <AlertTriangle className="h-6 w-6 text-amber-600 mt-1" />
-          <div>
-            <h3 className="font-medium text-amber-900 mb-2">Important Notice</h3>
-            <p className="text-amber-800 text-sm">
-              This tool assists with content moderation but should not be the sole safety mechanism. 
-              Always implement multiple layers of safety checks and human oversight for critical applications.
-              The AI Refinery SDK provides advanced capabilities, but human judgment remains essential 
-              for nuanced content decisions.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-white rounded-lg shadow-sm border p-6">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Technical Architecture</h3>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h4 className="font-medium text-gray-900 mb-2">Frontend</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• Next.js 14 with TypeScript</li>
-              <li>• Tailwind CSS for styling</li>
-              <li>• Radix UI components</li>
-              <li>• Real-time API integration</li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-medium text-gray-900 mb-2">Backend</h4>
-            <ul className="text-sm text-gray-600 space-y-1">
-              <li>• FastAPI with Python</li>
-              <li>• AI Refinery SDK integration</li>
-              <li>• RESTful API design</li>
-              <li>• OpenAPI documentation</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-gray-50 border rounded-lg p-6 text-center">
-        <img src="/logo.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
-        <p className="text-sm text-gray-600">
-          Responsible AI Latam Team
-        </p>
-      </div>
     </div>
   )
 } 

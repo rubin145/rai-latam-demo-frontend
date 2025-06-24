@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Shield, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle, SlidersHorizontal } from 'lucide-react'
+import { Shield, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle, Activity } from 'lucide-react'
 import * as Tabs from '@radix-ui/react-tabs'
 // import InteractiveEvaluation from './InteractiveEvaluation'
 // import TestMode from './TestMode'
@@ -122,8 +122,8 @@ export default function HarmEvaluatorApp() {
               value="control"
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-md transition-colors data-[state=active]:bg-yellow-50 data-[state=active]:text-yellow-700 text-gray-600 hover:text-gray-900 flex-1 justify-center"
             >
-              <SlidersHorizontal className="h-4 w-4" />
-              Control Pane
+              <Activity className="h-4 w-4" />
+              Live Monitoring
             </Tabs.Trigger>
             <Tabs.Trigger
               value="about"
@@ -174,7 +174,7 @@ export default function HarmEvaluatorApp() {
       <div className="bg-gray-50 border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <img src="/acc_logo2.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
+            <img src="/acc_logo.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
             <p className="text-base text-gray-600">
               Responsible AI Latam Team
             </p>
