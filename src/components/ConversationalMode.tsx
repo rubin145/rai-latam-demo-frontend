@@ -16,6 +16,8 @@ export default function ConversationalMode() {
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [useGuardrails, setUseGuardrails] = useState(true)
+  const [filterDecision, setFilterDecision] = useState<string | null>(null)
+  const [filterEvaluation, setFilterEvaluation] = useState<string | null>(null)
   const [sessionId, setSessionId] = useState<string | null>(null)
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -51,6 +53,13 @@ export default function ConversationalMode() {
 
       const data = await response.json()
       if (data.session_id) setSessionId(data.session_id)
+      if (useGuardrails) {
+        setFilterDecision(data.filter_decision ?? null)
+        setFilterEvaluation(data.filter_evaluation ?? null)
+      } else {
+        setFilterDecision(null)
+        setFilterEvaluation(null)
+      }
       const botMessage: Message = { sender: 'bot', text: data.response }
       setMessages(prev => [...prev, botMessage])
 
@@ -69,9 +78,27 @@ export default function ConversationalMode() {
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-200">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-semibold text-gray-800">Conversational Mode</h2>
+        <details className="cursor-pointer">
+          <summary className="text-sm font-medium text-gray-600">Backend</summary>
+          <div className="flex flex-col items-start mt-2 p-2 bg-gray-50 rounded-md shadow-inner">
+            <span
+              className={`h-5 w-5 rounded-full ${
+                filterDecision === 'danger'
+                  ? 'bg-red-500 ring-2 ring-red-300'
+                  : 'bg-green-500 ring-2 ring-green-300'
+              }`}
+            />
+            {filterEvaluation && (
+              <span className="mt-1 text-xs text-gray-700">{filterEvaluation}</span>
+            )}
+          </div>
+        </details>
         <button
-          onClick={() => setUseGuardrails(!useGuardrails)}
+          onClick={() => {
+            setUseGuardrails(prev => !prev)
+            setFilterDecision(null)
+            setFilterEvaluation(null)
+          }}
           className={`flex items-center gap-2 px-3 py-1.5 text-sm font-medium rounded-full transition-colors ${
             useGuardrails
               ? 'bg-green-100 text-green-800'
