@@ -11,8 +11,8 @@ export default function About() {
             <Shield className="h-8 w-8 text-white" />
           </div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">Harm Assessment Evaluator</h2>
-            <p className="text-gray-600">Advanced AI system for content safety evaluation</p>
+            <h2 className="text-2xl font-bold text-gray-900">Demo: Assistente Bancário</h2>
+            <p className="text-gray-600">Guardrails em agentes</p>
           </div>
         </div>
 
@@ -221,14 +221,9 @@ export default function About() {
       </div>
 
       <div className="bg-gray-50 border rounded-lg p-6 text-center">
+        <img src="/logo.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
         <p className="text-sm text-gray-600">
-          <strong>🛡️ Harm Assessment Evaluator</strong> | Powered by AI Refinery SDK
-        </p>
-        <p className="text-xs text-gray-500 mt-1">
-          Advanced AI safety evaluation system for content moderation
-        </p>
-        <p className="text-xs text-gray-500 mt-2">
-          Built with Next.js, FastAPI, and Accenture AI Refinery
+          Responsible AI Latam Team
         </p>
       </div>
     </div>

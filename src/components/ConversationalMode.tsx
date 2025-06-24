@@ -11,7 +11,7 @@ interface Message {
 
 export default function ConversationalMode() {
   const [messages, setMessages] = useState<Message[]>([
-    { sender: 'bot', text: "Hello! I'm ready to chat. Ask me anything." }
+    { sender: 'bot', text: "Meu nome é FinBot, estou aqui para te ajudar com assuntos bancários." }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)

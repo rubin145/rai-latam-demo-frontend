@@ -81,10 +81,10 @@ export default function HarmEvaluatorApp() {
               </div>
               <div>
                 <h1 className="text-3xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent">
-                  Harm Assessment Evaluator
+                  Demo: Assistente Bancário
                 </h1>
                 <p className="text-gray-600 mt-1">
-                  Advanced AI system for evaluating potentially harmful content in user queries
+                  Guardrails em agentes
                 </p>
               </div>
             </div>
@@ -156,11 +156,9 @@ export default function HarmEvaluatorApp() {
       <div className="bg-gray-50 border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <p className="text-sm text-gray-600">
-              <strong>🛡️ Harm Assessment Evaluator</strong> | Powered by AI Refinery SDK
-            </p>
-            <p className="text-xs text-gray-500 mt-1">
-              Advanced AI safety evaluation system for content moderation
+            <img src="/acc_logo2.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
+            <p className="text-base text-gray-600">
+              Responsible AI Latam Team
             </p>
           </div>
         </div>
