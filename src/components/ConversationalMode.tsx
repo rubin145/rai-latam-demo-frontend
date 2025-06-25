@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Bot, User, CornerDownLeft, Circle, CheckCircle } from 'lucide-react'
+import { fetchApi } from '@/utils/api'
 
 // Define the structure of a chat message
 interface Message {
@@ -41,12 +42,12 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
 
     // Determine the endpoint based on the guardrails toggle
     const endpoint = useGuardrails
-      ? 'http://localhost:8000/api/chat-guardrails'
-      : 'http://localhost:8000/api/chat'
+      ? '/api/chat-guardrails'
+      : '/api/chat'
 
     try {
       // API call to the backend
-      const response = await fetch(endpoint, {
+      const data = await fetchApi(endpoint, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
@@ -57,11 +58,6 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
         ),
       })
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok')
-      }
-
-      const data = await response.json()
       if (data.session_id) setSessionId(data.session_id)
       if (useGuardrails) {
         setFilterDecision(data.filter_decision ?? null)
