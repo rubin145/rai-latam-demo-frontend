@@ -1,63 +1,83 @@
-# Harm Evaluator Frontend
+# Demo: Assistente Bancário Frontend
 
-A modern Next.js frontend application for the Harm Assessment Evaluator system.
+This project is the frontend application for the "Demo: Assistente Bancário", demonstrating guardrails and live monitoring in LLM-based chat agents.
 
-## Features
+## Overview
 
+This demo illustrates how to implement safety mechanisms (guardrails) and evaluate agent responses in real time. The application provides:
+- **Chat Agent**: A conversation interface with FinBot, an LLM-based banking assistant. Toggle guardrails on/off to filter user inputs for toxicity, financial advice, and hallucinations.
+- **Live Monitoring**: A dashboard displaying service status, counts of filtered prompts by category, and manual evaluation of the agent's responses.
+- **About**: Detailed information about policies, evaluation metrics, risk dimensions, risk levels, and recommendations.
+And inactive features (in development):
 - **Interactive Query Evaluation**: Real-time harm assessment with beautiful UI
 - **Test Management**: Add, view, and manage test questions
 - **Batch Testing**: Run comprehensive tests with detailed results
-- **Modern UI**: Built with Tailwind CSS and Radix UI components
-- **TypeScript**: Full type safety throughout the application
-- **Responsive Design**: Works seamlessly on desktop and mobile devices
+
 
 ## Tech Stack
 
-- **Next.js 14**: React framework with App Router
-- **TypeScript**: Type-safe development
-- **Tailwind CSS**: Utility-first CSS framework
-- **Radix UI**: Accessible component primitives
-- **Lucide React**: Beautiful icons
+- **Next.js** 15 (App Router)
+- **React** 19
+- **TypeScript** 5
+- **Tailwind CSS** 4
+- **Radix UI** (Tabs)
+- **Lucide React** for icons
+- **ESLint** (Next.js core-web-vitals)
+- **Docker** (optional)
 
-## Installation
+## Project Structure
 
-1. **Navigate to the frontend directory:**
 ```bash
-cd harm_evaluator_app/frontend
+.
+├── Dockerfile                  # Docker configuration (Node.js 18)
+├── README.md                   # This documentation
+├── next.config.ts              # Next.js configuration
+├── tsconfig.json               # TypeScript configuration
+├── eslint.config.mjs           # ESLint configuration
+├── postcss.config.mjs          # PostCSS / Tailwind CSS configuration
+├── package.json                # Dependencies and scripts
+├── public/                     # Static assets (logos, icons, etc.)
+└── src/
+    ├── app/                    # Application router files
+    │   ├── globals.css         # Global styles
+    │   ├── layout.tsx          # Root layout (fonts and metadata)
+    │   └── page.tsx            # Home page
+    └── components/             # React components
+        ├── HarmEvaluatorApp.tsx    # Main application component
+        ├── ConversationalMode.tsx   # Chat agent interface
+        ├── ControlPane.tsx         # Live monitoring dashboard
+        ├── About.tsx               # About / documentation section
 ```
 
-2. **Install dependencies:**
+## Getting Started
+
+### Prerequisites
+
+- Node.js 18+
+- npm
+- Backend API running at `http://localhost:8000`
+
+### Installation
+
 ```bash
+git clone <repository-url>
+cd rai-latam-demo-frontend
 npm install
 ```
 
-3. **Start the development server:**
+### Development
+
 ```bash
 npm run dev
 ```
 
-4. **Open your browser:**
-Navigate to [http://localhost:3000](http://localhost:3000)
+Open your browser and navigate to [http://localhost:3000](http://localhost:3000).
 
-## Project Structure
+### Production
 
-```
-frontend/
-├── src/
-│   ├── app/
-│   │   ├── globals.css          # Global styles
-│   │   ├── layout.tsx           # Root layout
-│   │   └── page.tsx             # Home page
-│   └── components/
-│       ├── HarmEvaluatorApp.tsx    # Main app component
-│       ├── InteractiveEvaluation.tsx # Query evaluation tab
-│       ├── TestMode.tsx            # Test management tab
-│       └── About.tsx               # About information tab
-├── public/                      # Static assets
-├── package.json                 # Dependencies and scripts
-├── tailwind.config.ts          # Tailwind configuration
-├── tsconfig.json               # TypeScript configuration
-└── next.config.js              # Next.js configuration
+```bash
+npm run build
+npm run start
 ```
 
 ## Available Scripts
@@ -65,124 +85,26 @@ frontend/
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
 - `npm run start` - Start production server
-- `npm run lint` - Run ESLint
-- `npm run type-check` - Run TypeScript checks
+- `npm run lint` - run ESLint
 
 ## Configuration
 
-The frontend expects the backend API to be running on `http://localhost:8000`. Make sure the backend is running before starting the frontend.
+The frontend expects the backend API to be running at `http://localhost:8000`. The following endpoints are used:
 
-## Components Overview
-
-### HarmEvaluatorApp
-Main application component that manages:
-- Service status checking
-- Tab navigation
-- Layout and styling
-
-### InteractiveEvaluation
-Handles real-time query evaluation:
-- Query input with keyboard shortcuts
-- API communication with backend
-- Results display with risk analysis
-- Error handling
-
-### TestMode
-Manages test questions and batch testing:
-- Load and display test questions
-- Add new test questions
-- Run batch tests
-- Display test results with accuracy metrics
-
-### About
-Provides comprehensive information about:
-- System overview and features
-- Risk dimensions and levels
-- Recommendations
-- Technical architecture
-
-## API Integration
-
-The frontend communicates with the FastAPI backend through these endpoints:
-
+- `POST /api/chat-guardrails` - Chat with guardrails enabled
+- `POST /api/chat` - Chat without guardrails
 - `GET /api/evaluation/status` - Check service health
-- `POST /api/evaluation/query` - Evaluate a single query
-- `GET /api/evaluation/questions` - Get all test questions
-- `POST /api/evaluation/questions` - Add a new test question
-- `POST /api/evaluation/batch-test` - Run batch test
+- `POST /api/evaluate_response` - Evaluate agent's last response
 
-## Styling
+## Docker (Optional)
 
-The application uses:
-- **Tailwind CSS** for utility-first styling
-- **Custom gradients** for visual appeal
-- **Responsive design** for all screen sizes
-- **Accessible colors** following WCAG guidelines
+Build and run using Docker:
 
-## Development
-
-### Adding New Features
-
-1. Create new components in `src/components/`
-2. Follow the existing TypeScript patterns
-3. Use Tailwind classes for styling
-4. Ensure responsive design
-5. Add proper error handling
-
-### Code Style
-
-- Use TypeScript for all new code
-- Follow the existing component structure
-- Use meaningful variable and function names
-- Add comments for complex logic
-- Ensure accessibility
-
-## Build and Deployment
-
-### Development Build
 ```bash
-npm run dev
+docker build -t demo-assistente-bancario-frontend .
+docker run -p 3000:3000 demo-assistente-bancario-frontend
 ```
-
-### Production Build
-```bash
-npm run build
-npm run start
-```
-
-### Docker (Optional)
-```bash
-# Build Docker image
-docker build -t harm-evaluator-frontend .
-
-# Run container
-docker run -p 3000:3000 harm-evaluator-frontend
-```
-
-## Troubleshooting
-
-### Common Issues
-
-1. **Backend not running**: Ensure the FastAPI backend is running on port 8000
-2. **CORS errors**: Check that the backend has proper CORS configuration
-3. **Build errors**: Run `npm run lint` and `npm run type-check` to identify issues
-4. **Styling issues**: Clear browser cache and restart development server
-
-### Performance Optimization
-
-- Use `next/image` for optimized images
-- Implement code splitting for large components
-- Use React.memo for expensive components
-- Minimize bundle size with proper imports
 
 ## Contributing
 
-1. Follow the existing code style
-2. Add TypeScript types for all new code
-3. Test components thoroughly
-4. Ensure responsive design
-5. Add proper error handling
-
-## License
-
-This project is part of the Harm Assessment Evaluator system.
+Contributions are welcome! Please open issues for suggestions and submit pull requests for proposed changes.
