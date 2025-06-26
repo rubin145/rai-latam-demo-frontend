@@ -203,6 +203,19 @@ export default function About() {
         </div>
       </div> */}
 
+      <div className="bg-white rounded-lg shadow-sm border p-6">
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Experimente</h3>
+          <div className="flex justify-center">
+            <img 
+              src="/rai_latam_demo_qr_.png" 
+              alt="QR Code para experimentar o demo" 
+              className="w-48 h-48 object-contain"
+            />
+          </div>
+        </div>
+      </div>
+
     </div>
   )
 } 
