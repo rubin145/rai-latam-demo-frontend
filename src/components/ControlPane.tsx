@@ -70,7 +70,7 @@ import { API_BASE_URL } from '@/lib/config'
      <div className="space-y-6">
        <div className="text-center space-y-4">
          <h3 className="text-lg font-semibold text-gray-800">
-           Prompts
+           Prompts filtrados
          </h3>
          <div className="flex justify-center space-x-12">
            <div className="flex flex-col items-center">

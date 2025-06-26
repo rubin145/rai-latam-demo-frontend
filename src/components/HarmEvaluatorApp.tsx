@@ -176,7 +176,7 @@ export default function HarmEvaluatorApp() {
       <div className="bg-gray-50 border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <Image src="/acc_logo.png" alt="Company Logo" width={128} height={32} className="mx-auto mb-4 h-8" />
+            <Image src="/acc_logo.png" alt="Company Logo" width={64} height={66} className="mx-auto mb-4 h-16" />
             <p className="text-base text-gray-600">
               Responsible AI Latam Team
             </p>

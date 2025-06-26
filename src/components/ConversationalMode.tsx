@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Bot, User, CornerDownLeft, Circle, CheckCircle } from 'lucide-react'
 import { API_BASE_URL } from '@/lib/config'
 
@@ -29,6 +29,14 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
   const [filterDecision, setFilterDecision] = useState<string | null>(null)
   const [filterEvaluation, setFilterEvaluation] = useState<string | null>(null)
   const [sessionId, setSessionId] = useState<string | null>(null)
+  const chatContainerRef = useRef<HTMLDivElement>(null)
+
+  // Auto-scroll to bottom when messages change
+  useEffect(() => {
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight
+    }
+  }, [messages, isLoading])
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -130,7 +138,7 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
       </div>
       
       {/* Chat History */}
-      <div className="h-96 overflow-y-auto pr-4 space-y-6 mb-4 border rounded-lg p-4 bg-gray-50">
+      <div ref={chatContainerRef} className="h-96 overflow-y-auto pr-4 space-y-6 mb-4 border rounded-lg p-4 bg-gray-50">
         {messages.map((msg, index) => (
           <div key={index} className={`flex items-start gap-4 ${msg.sender === 'user' ? 'justify-end' : ''}`}>
             {msg.sender === 'bot' && (
