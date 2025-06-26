@@ -3,11 +3,13 @@
 import { useState, useEffect } from 'react'
 import { Shield, Info, AlertTriangle, CheckCircle, XCircle, MessageCircle, Activity } from 'lucide-react'
 import * as Tabs from '@radix-ui/react-tabs'
+import Image from 'next/image'
 // import InteractiveEvaluation from './InteractiveEvaluation'
 // import TestMode from './TestMode'
 import About from './About'
 import ConversationalMode from './ConversationalMode'
 import ControlPane from './ControlPane'
+import { API_BASE_URL } from '@/lib/config'
 
 interface ServiceStatus {
   status: string
@@ -31,7 +33,7 @@ export default function HarmEvaluatorApp() {
 
   const checkServiceStatus = async () => {
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/status', {
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/status`, {
         credentials: 'include',
       })
       if (response.ok) {
@@ -174,7 +176,7 @@ export default function HarmEvaluatorApp() {
       <div className="bg-gray-50 border-t mt-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="text-center">
-            <img src="/acc_logo.png" alt="Company Logo" className="mx-auto mb-4 h-8" />
+            <Image src="/acc_logo.png" alt="Company Logo" width={128} height={32} className="mx-auto mb-4 h-8" />
             <p className="text-base text-gray-600">
               Responsible AI Latam Team
             </p>

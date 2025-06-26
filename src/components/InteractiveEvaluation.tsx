@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Search, AlertTriangle, CheckCircle, XCircle, AlertCircle } from 'lucide-react'
+import { API_BASE_URL } from '@/lib/config'
 
 interface QueryEvaluationResponse {
   assessment: string
@@ -34,7 +35,7 @@ export default function InteractiveEvaluation() {
     setResult(null)
 
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/query', {
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/query`, {
         method: 'POST',
         credentials: 'include',
         headers: {

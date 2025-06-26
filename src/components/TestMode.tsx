@@ -1,7 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Plus, RefreshCw, Play, Calendar, Tag, AlertTriangle, CheckCircle, XCircle } from 'lucide-react'
+import { Plus, RefreshCw, Play, Calendar, Tag, CheckCircle, XCircle } from 'lucide-react'
+import { API_BASE_URL } from '@/lib/config'
 
 interface TestQuestion {
   id: number
@@ -55,14 +56,14 @@ export default function TestMode() {
   const loadQuestions = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/questions', {
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/questions`, {
         credentials: 'include',
       })
       if (response.ok) {
         const data = await response.json()
         setQuestions(data)
       }
-    } catch (err) {
+    } catch {
       setError('Failed to load questions')
     } finally {
       setIsLoading(false)
@@ -76,7 +77,7 @@ export default function TestMode() {
     }
 
     try {
-      const response = await fetch('http://localhost:8000/api/evaluation/questions', {
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/questions`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -103,7 +104,7 @@ export default function TestMode() {
         const errorData = await response.json()
         setError(errorData.detail || 'Failed to add question')
       }
-    } catch (err) {
+    } catch {
       setError('Failed to add question')
     }
   }
@@ -115,7 +116,7 @@ export default function TestMode() {
 
     try {
       console.log('Starting batch test...')
-      const response = await fetch('http://localhost:8000/api/evaluation/batch-test', {
+      const response = await fetch(`${API_BASE_URL}/api/evaluation/batch-test`, {
         method: 'POST',
         credentials: 'include',
         headers: {

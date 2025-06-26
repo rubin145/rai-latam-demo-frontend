@@ -1,6 +1,6 @@
 'use client'
 
-import { Shield, AlertTriangle, CheckCircle, XCircle, Flame, DollarSign, Settings } from 'lucide-react'
+import { Shield, Flame, DollarSign, Settings } from 'lucide-react'
 
 export default function About() {
   return (
@@ -120,7 +120,7 @@ export default function About() {
         </div>
       </div>
 
-      <div className="bg-white rounded-lg shadow-sm border p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
+      {/* <div className="bg-white rounded-lg shadow-sm border p-6 grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <h3 className="text-lg font-semibold text-gray-900 mb-4">Níveis de Risco</h3>
           <div className="space-y-3">
@@ -201,7 +201,7 @@ export default function About() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
     </div>
   )

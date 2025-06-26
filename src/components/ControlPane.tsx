@@ -2,12 +2,14 @@
 
 import { useState } from 'react'
 import { AlertTriangle, DollarSign, Brain, Target } from 'lucide-react'
+import { API_BASE_URL } from '@/lib/config'
 
  interface ControlPaneProps {
    lastInteraction?: { prompt: string; response: string }
    totalPrompts: number
    toxicityCount: number
    financeCount: number
+   hallucinationCount?: number
  }
 
  interface EvalResult {
@@ -27,6 +29,8 @@ import { AlertTriangle, DollarSign, Brain, Target } from 'lucide-react'
    totalPrompts,
    toxicityCount,
    financeCount,
+   // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   hallucinationCount,
  }: ControlPaneProps) {
    const [evalResult, setEvalResult] = useState<EvalResult | null>(null)
    const [loading, setLoading] = useState(false)
@@ -35,7 +39,7 @@ import { AlertTriangle, DollarSign, Brain, Target } from 'lucide-react'
      if (!lastInteraction) return
      setLoading(true)
      try {
-       const res = await fetch('http://localhost:8000/api/evaluate_response', {
+       const res = await fetch(`${API_BASE_URL}/api/evaluate_response`, {
          method: 'POST',
          headers: { 'Content-Type': 'application/json' },
          body: JSON.stringify({

@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { Bot, User, CornerDownLeft, Circle, CheckCircle } from 'lucide-react'
+import { API_BASE_URL } from '@/lib/config'
 
 // Define the structure of a chat message
 interface Message {
@@ -41,8 +42,8 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
 
     // Determine the endpoint based on the guardrails toggle
     const endpoint = useGuardrails
-      ? 'http://localhost:8000/api/chat-guardrails'
-      : 'http://localhost:8000/api/chat'
+      ? `${API_BASE_URL}/api/chat-guardrails`
+      : `${API_BASE_URL}/api/chat`
 
     try {
       // API call to the backend
