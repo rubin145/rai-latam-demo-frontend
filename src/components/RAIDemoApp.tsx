@@ -17,7 +17,7 @@ interface ServiceStatus {
   timestamp: string
 }
 
-export default function HarmEvaluatorApp() {
+export default function RAIDemoApp() {
   const [serviceStatus, setServiceStatus] = useState<ServiceStatus | null>(null)
   // Contadores por tipo de filtro de input (danger flags) y total de prompts
   const [totalPrompts, setTotalPrompts] = useState(0)

@@ -1,6 +1,6 @@
 'use client'
 
-import { Shield, Flame, DollarSign, Target } from 'lucide-react'
+import { Flame, DollarSign, Target } from 'lucide-react'
 
 export default function About() {
   return (

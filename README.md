@@ -43,7 +43,7 @@ And inactive features (in development):
     │   ├── layout.tsx          # Root layout (fonts and metadata)
     │   └── page.tsx            # Home page
     └── components/             # React components
-        ├── HarmEvaluatorApp.tsx    # Main application component
+        ├── RAIDemoApp.tsx          # Main application component
         ├── ConversationalMode.tsx   # Chat agent interface
         ├── ControlPane.tsx         # Live monitoring dashboard
         ├── About.tsx               # About / documentation section

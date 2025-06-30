@@ -1,9 +1,9 @@
-import HarmEvaluatorApp from '@/components/HarmEvaluatorApp'
+import RAIDemoApp from '@/components/RAIDemoApp'
 
 export default function Home() {
   return (
     <main>
-      <HarmEvaluatorApp />
+      <RAIDemoApp />
     </main>
   )
 }
