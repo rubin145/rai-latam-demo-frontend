@@ -1,6 +1,6 @@
  'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { AlertTriangle, DollarSign, Brain, Target } from 'lucide-react'
 import { API_BASE_URL } from '@/lib/config'
 
@@ -34,6 +34,11 @@ import { API_BASE_URL } from '@/lib/config'
  }: ControlPaneProps) {
    const [evalResult, setEvalResult] = useState<EvalResult | null>(null)
    const [loading, setLoading] = useState(false)
+
+   // Clear evaluation results when lastInteraction changes
+   useEffect(() => {
+     setEvalResult(null)
+   }, [lastInteraction])
 
    const handleEvaluate = async () => {
      if (!lastInteraction) return
