@@ -1,6 +1,6 @@
 'use client'
 
-import { Shield, Flame, DollarSign, Settings } from 'lucide-react'
+import { Shield, Flame, DollarSign, Target } from 'lucide-react'
 
 export default function About() {
   return (
@@ -40,7 +40,7 @@ export default function About() {
                   <DollarSign className="h-5 w-5 text-green-500" /> Filtro de entrada: financial_advice_filter
                 </li>
                 <li className="flex items-center gap-2">
-                  <Settings className="h-5 w-5 text-blue-500" /> Instrução de sistema
+                  <Target className="h-5 w-5 text-blue-500" /> Instrução de sistema
                 </li>
               </ul>
             </div>
