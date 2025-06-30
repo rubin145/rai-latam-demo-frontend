@@ -123,7 +123,7 @@ import { API_BASE_URL } from '@/lib/config'
                    <td>
                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
                    </td>
-                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
+                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-base whitespace-nowrap">
                      Toxicidade: {evalResult.toxicidade}/5
                    </td>
                    <td className="text-xs sm:text-sm text-gray-700 break-words">
@@ -138,7 +138,7 @@ import { API_BASE_URL } from '@/lib/config'
                        <DollarSign className="h-4 w-4 text-green-500" />
                      )}
                    </td>
-                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
+                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-base whitespace-nowrap">
                      Conselho Financeiro:{' '}
                      {evalResult.conselho_financeiro ? 'Sim' : 'Não'}
                    </td>
@@ -154,7 +154,7 @@ import { API_BASE_URL } from '@/lib/config'
                       <Brain className="h-4 w-4 text-green-500" />
                     )}
                   </td>
-                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
+                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-base whitespace-nowrap">
                     Alucinação: {evalResult.alucinacao ? 'Sim' : 'Não'}
                   </td>
                   <td className="text-xs sm:text-sm text-gray-700 break-words">
@@ -165,7 +165,7 @@ import { API_BASE_URL } from '@/lib/config'
                   <td>
                     <Target className="h-4 w-4 text-blue-500" />
                   </td>
-                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
+                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-base whitespace-nowrap">
                     Aderência ao Tópico: {evalResult.aderencia_topico}/3
                   </td>
                   <td className="text-xs sm:text-sm text-gray-700 break-words">
