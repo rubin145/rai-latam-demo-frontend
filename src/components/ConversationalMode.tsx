@@ -116,7 +116,7 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
               }`}
             />
             {filterEvaluation && (
-              <span className="mt-1 text-xs text-gray-700">{filterEvaluation}</span>
+              <span className="mt-1 text-xs text-gray-900">{filterEvaluation}</span>
             )}
           </div>
         </details>
@@ -180,7 +180,7 @@ export default function ConversationalMode({ onInteraction }: ConversationalMode
           onChange={e => setInput(e.target.value)}
           placeholder="Type your message here..."
           disabled={isLoading}
-          className="w-full pl-4 pr-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow"
+          className="w-full pl-4 pr-12 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-shadow text-gray-900 placeholder-gray-500"
         />
         <button
           type="submit"

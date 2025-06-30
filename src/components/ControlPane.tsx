@@ -75,21 +75,21 @@ import { API_BASE_URL } from '@/lib/config'
          <div className="flex justify-center space-x-12">
            <div className="flex flex-col items-center">
              <AlertTriangle className="h-8 w-8 text-yellow-500" />
-             <span className="mt-2 text-3xl font-bold">
+             <span className="mt-2 text-3xl font-bold text-gray-900">
                {totalPrompts > 0
                  ? `${toxicityCount}/${totalPrompts}`
                  : toxicityCount}
              </span>
-             <span className="text-sm text-gray-600">Toxicidade</span>
+             <span className="text-sm text-gray-800">Toxicidade</span>
            </div>
            <div className="flex flex-col items-center">
              <DollarSign className="h-8 w-8 text-green-500" />
-             <span className="mt-2 text-3xl font-bold">
+             <span className="mt-2 text-3xl font-bold text-gray-900">
                {totalPrompts > 0
                  ? `${financeCount}/${totalPrompts}`
                  : financeCount}
              </span>
-             <span className="text-sm text-gray-600">Conselho Financeiro</span>
+             <span className="text-sm text-gray-800">Conselho Financeiro</span>
            </div>
          </div>
        </div>
@@ -111,21 +111,22 @@ import { API_BASE_URL } from '@/lib/config'
              {loading ? 'Avaliando...' : 'Avaliar Resposta'}
            </button>
            {evalResult && (
-             <table className="table-auto w-full mt-4 text-left">
-               <colgroup>
-                 <col className="w-6" />
-                 <col className="w-auto" />
-                 <col className="w-full" />
-               </colgroup>
+             <div className="overflow-x-auto mt-4">
+               <table className="table-auto w-full text-left min-w-max sm:min-w-full">
+                 <colgroup>
+                   <col className="w-8 sm:w-6" />
+                   <col className="w-32 sm:w-auto" />
+                   <col className="w-48 sm:w-full" />
+                 </colgroup>
                <tbody>
                  <tr className="align-baseline">
                    <td>
                      <AlertTriangle className="h-4 w-4 text-yellow-500" />
                    </td>
-                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
                      Toxicidade: {evalResult.toxicidade}/5
                    </td>
-                   <td className="text-sm text-gray-500">
+                   <td className="text-xs sm:text-sm text-gray-700 break-words">
                      {evalResult.toxicidadeEvaluation}
                    </td>
                  </tr>
@@ -137,11 +138,11 @@ import { API_BASE_URL } from '@/lib/config'
                        <DollarSign className="h-4 w-4 text-green-500" />
                      )}
                    </td>
-                   <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                   <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
                      Conselho Financeiro:{' '}
                      {evalResult.conselho_financeiro ? 'Sim' : 'Não'}
                    </td>
-                   <td className="text-sm text-gray-500">
+                   <td className="text-xs sm:text-sm text-gray-700 break-words">
                      {evalResult.conselhoFinanceiroEvaluation}
                    </td>
                  </tr>
@@ -153,10 +154,10 @@ import { API_BASE_URL } from '@/lib/config'
                       <Brain className="h-4 w-4 text-green-500" />
                     )}
                   </td>
-                  <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
                     Alucinação: {evalResult.alucinacao ? 'Sim' : 'Não'}
                   </td>
-                  <td className="text-sm text-gray-500">
+                  <td className="text-xs sm:text-sm text-gray-700 break-words">
                     {evalResult.alucinacaoEvaluation}
                   </td>
                 </tr>
@@ -164,15 +165,16 @@ import { API_BASE_URL } from '@/lib/config'
                   <td>
                     <Target className="h-4 w-4 text-blue-500" />
                   </td>
-                  <td className="pl-2 pr-4 font-medium whitespace-nowrap">
+                  <td className="pl-2 pr-2 sm:pr-4 font-medium text-gray-900 text-xs sm:text-sm">
                     Aderência ao Tópico: {evalResult.aderencia_topico}/3
                   </td>
-                  <td className="text-sm text-gray-500">
+                  <td className="text-xs sm:text-sm text-gray-700 break-words">
                     {evalResult.aderenciaTopicoEvaluation}
                   </td>
                 </tr>
                </tbody>
-             </table>
+               </table>
+             </div>
            )}
          </div>
        )}
