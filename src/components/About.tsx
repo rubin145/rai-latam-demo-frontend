@@ -196,14 +196,15 @@ export default function About() {
 
       <div className="bg-white rounded-lg shadow-sm border p-6">
         <div className="text-center">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Experimente</h3>
-          <div className="flex justify-center">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">Experimente!</h3>
+          <div className="flex justify-center mb-3">
             <img 
               src="/rai_latam_demo_qr_.png" 
               alt="QR Code para experimentar o demo" 
               className="w-48 h-48 object-contain"
             />
           </div>
+          <p className="text-sm text-gray-600">Escaneie o QR para testar no seu celular</p>
         </div>
       </div>
 
