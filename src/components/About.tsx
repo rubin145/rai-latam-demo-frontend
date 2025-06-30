@@ -6,15 +6,6 @@ export default function About() {
   return (
     <div className="space-y-6">
       <div className="bg-white rounded-lg shadow-sm border p-6">
-        <div className="flex items-center gap-3 mb-6">
-          <div className="p-2 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg">
-            <Shield className="h-8 w-8 text-white" />
-          </div>
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900">Demo: Assistente Bancário</h2>
-            <p className="text-gray-600">Guardrails em agentes</p>
-          </div>
-        </div>
 
         <div className="prose max-w-none">
           <h3 className="text-lg font-semibold text-gray-900 mb-3">Visão Geral</h3>
